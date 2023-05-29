@@ -1,6 +1,6 @@
 import telebot
 from telebot import types
-from gs_parser import get_articles, get_article_blocks, get_article_info
+from gs_parser import parse_article_info
 from credentials import bot_token
 
 
@@ -16,7 +16,7 @@ def greet(message):
     markup.add(btn_add, btn_remove, btn_help)
 
     bot.send_message(message.chat.id, 'Hello! '
-            'My purpose is to send you new articles '
+            'My purpose is to continuously send you new articles '
             'from Google Scholar based on your interests. '
             'For more information type /help', reply_markup=markup)
 
@@ -34,10 +34,13 @@ def search(message):
 
 def process_search_query(message):
     query = message.text
-    response = get_article_info(query)
+    response = parse_article_info(query)
     for name, url in response:
         bot.send_message(message.chat.id, name)
         bot.send_message(message.chat.id, url)
 
+
+#your query is added, you'll receive new articles when they appear. 
+#get last articles on given topic (max 10)
 
 bot.polling()

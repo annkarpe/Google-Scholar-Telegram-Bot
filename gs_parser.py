@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup as bs
 #url1 = f"https://scholar.google.com/scholar?start=0&q={query}&hl=en&scisbd=1&as_sdt=0,5"
 
 
-def get_article_blocks(query):
+def parse_article_blocks(query):
     url = f"https://scholar.google.com/scholar?start=0&q={query}&hl=en&scisbd=1&as_sdt=0,5"
     response = requests.get(url)
     soup = bs(response.text, "html.parser")
@@ -13,8 +13,8 @@ def get_article_blocks(query):
     return article_blocks
 
 
-def get_article_info(query):
-    article_blocks = get_article_blocks(query)
+def parse_article_info(query):
+    article_blocks = parse_article_blocks(query)
     articles = []
 
     for article_block in article_blocks:
